@@ -1,118 +1,103 @@
-# 🛒 MERN E-Commerce Dashboard
+# MERN E-Commerce Admin Dashboard
 
-A simple **MERN Stack CRUD Dashboard** where users can manage products.
-This project demonstrates **Create, Read, Update, Delete (CRUD)** operations using **MongoDB, Express, React, and Node.js**.
-
----
-
-# 🚀 Features
-
-✔ Add new products
-✔ View product list
-✔ Update product details
-✔ Delete products
-✔ Backend REST API using Express
-✔ MongoDB database integration
+A full-stack **MERN (MongoDB, Express, React, Node.js)** application for managing products in an e-commerce system.
+This dashboard allows admins to **add, update, delete, and view products** with a simple and responsive UI.
 
 ---
 
-# 🛠 Tech Stack
+## 🚀 Features
 
-Frontend
+* Add new products
+* View product list
+* Update product details
+* Delete products
+* REST API integration
+* Responsive dashboard UI
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend**
 
 * React.js
-* CSS
+* CSS / Bootstrap
 
-Backend
+**Backend**
 
 * Node.js
 * Express.js
 
-Database
+**Database**
 
 * MongoDB
+* Mongoose
 
-Tools
+---
 
-* Git
-* GitHub
-* VS Code
+## 📂 Project Structure
+
+Backend/
+front-end/
+screenshots/
+README.md
 
 ---
 
 ## 📷 Screenshots
 
-### Product List Page
+### Product List
 
 ![Product List](screenshots/product-list.png)
 
-### Add Product Page
+### Add Product
 
 ![Add Product](screenshots/add-product.png)
 
-### Backend API Response
+### API Response
 
 ![API Response](screenshots/api-response.png)
 
 ---
 
-# ⚙️ Installation
+## ⚙️ Installation
 
 Clone the repository
 
-```
 git clone https://github.com/sumitsg0509/Mern-ecommerce-dashboard.git
-```
 
-Go to project folder
+Install backend dependencies
 
-```
-cd Mern-ecommerce-dashboard
-```
-
-Install dependencies
-
-```
+cd Backend
 npm install
-```
 
-Start backend server
+Run backend server
 
-```
-node index.js
-```
-
-Start React frontend
-
-```
 npm start
-```
+
+Install frontend dependencies
+
+cd front-end
+npm install
+
+Run frontend
+
+npm start
 
 ---
 
-# 📂 Project Structure
+## 📌 Future Improvements
 
-```
-Mern-ecommerce-dashboard
-│
-├── Backend
-│
-├── front-end
-│
-├── screenshots
-│   ├── product-list.png
-│   ├── add-product.png
-│   └── api-response.png
-│
-├── package.json
-└── README.md
-```
+* User Authentication (JWT)
+* Product search
+* Pagination
+* Image upload
+* Dashboard analytics
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Sumit**
-
-GitHub
-https://github.com/sumitsg0509
+MSc Computer Science Student
+Aspiring Full Stack Developer
