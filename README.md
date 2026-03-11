@@ -44,7 +44,7 @@ Tools
 
 ## Product List Page
 
-![Product List](screenshots/product-list.png)
+![Product List](screenshots/product-list.png).
 
 ## Add Product Page
 
