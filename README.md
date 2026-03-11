@@ -44,15 +44,15 @@ Tools
 
 ### Product List Page
 
-![Product List](./screenshots/product-list.png)
+![Product List](screenshots/product-list.png)
 
 ### Add Product Page
 
-![Add Product](./screenshots/add-product.png)
+![Add Product](screenshots/add-product.png)
 
 ### Backend API Response
 
-![API Response](./screenshots/api-response.png)
+![API Response](screenshots/api-response.png)
 
 ---
 
