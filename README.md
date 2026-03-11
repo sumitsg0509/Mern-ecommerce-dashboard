@@ -40,16 +40,19 @@ Tools
 
 ---
 
-## Product List Page
-![Product List](screenshots/product-list.png)
+## 📷 Screenshots
 
-## Add Product Page
+### Product List Page
 
-![Add Product](screenshots/add-product.png)
+![Product List](./screenshots/product-list.png)
 
-## Backend API Response
+### Add Product Page
 
-![API Response](screenshots/api-response.png)
+![Add Product](./screenshots/add-product.png)
+
+### Backend API Response
+
+![API Response](./screenshots/api-response.png)
 
 ---
 
