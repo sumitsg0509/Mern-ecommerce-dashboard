@@ -108,13 +108,13 @@ npm start
 # 📸 Screenshots
 
 ### Product List
-![Product List](screenshots/product-list.png)
+![Product List](screenshots/product-list-new.png)
 
 ### Add Product
-![Add Product](screenshots/add-product.png)
+![Add Product](screenshots/add-product-new.png)
 
 ### Login Page
-![Login](screenshots/login.png)
+![Login](screenshots/login-new.png)
 
 ---
 
