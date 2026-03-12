@@ -1,103 +1,132 @@
-# MERN E-Commerce Admin Dashboard
+# 🛒 MERN E-commerce Dashboard
 
-A full-stack **MERN (MongoDB, Express, React, Node.js)** application for managing products in an e-commerce system.
-This dashboard allows admins to **add, update, delete, and view products** with a simple and responsive UI.
+A full stack **MERN Dashboard Application** to manage products with authentication and CRUD operations.
 
----
-
-## 🚀 Features
-
-* Add new products
-* View product list
-* Update product details
-* Delete products
-* REST API integration
-* Responsive dashboard UI
+This project allows users to register, login and manage products including adding, updating, deleting and searching products.
 
 ---
 
-## 🛠 Tech Stack
+# 🚀 Features
 
-**Frontend**
+✔ User Registration
+✔ User Login Authentication
+✔ Protected Routes
+✔ Add Product
+✔ Update Product
+✔ Delete Product
+✔ Product Search
+✔ Dashboard UI
+✔ Sidebar Navigation
+
+---
+
+# 🛠 Tech Stack
+
+### Frontend
 
 * React.js
-* CSS / Bootstrap
+* React Router
+* CSS
 
-**Backend**
+### Backend
 
 * Node.js
 * Express.js
 
-**Database**
+### Database
 
 * MongoDB
 * Mongoose
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-Backend/
-front-end/
-screenshots/
+Backend
+│
+├── models
+│ ├── Product.js
+│ └── User.js
+│
+├── index.js
+│
+front-end
+│
+├── public
+├── src
+│ ├── components
+│ ├── App.js
+│
+screenshots
+│
 README.md
 
 ---
 
-## 📷 Screenshots
+# ⚙️ Installation
 
-### Product List
-
-![Product List](screenshots/product-list.png)
-
-### Add Product
-
-![Add Product](screenshots/add-product.png)
-
-### API Response
-
-![API Response](screenshots/api-response.png)
-
----
-
-## ⚙️ Installation
-
-Clone the repository
+### 1️⃣ Clone the repository
 
 git clone https://github.com/sumitsg0509/Mern-ecommerce-dashboard.git
 
-Install backend dependencies
+### 2️⃣ Install backend dependencies
 
 cd Backend
 npm install
 
-Run backend server
+### 3️⃣ Install frontend dependencies
 
-npm start
-
-Install frontend dependencies
-
-cd front-end
+cd ../front-end
 npm install
 
-Run frontend
+### 4️⃣ Start Backend Server
 
+cd Backend
+nodemon index.js
+
+### 5️⃣ Start Frontend
+
+cd front-end
 npm start
 
 ---
 
-## 📌 Future Improvements
+# 🌐 API Routes
 
-* User Authentication (JWT)
-* Product search
-* Pagination
-* Image upload
-* Dashboard analytics
+| Method | Route        | Description      |
+| ------ | ------------ | ---------------- |
+| POST   | /register    | Register User    |
+| POST   | /login       | Login User       |
+| GET    | /products    | Get All Products |
+| POST   | /add-product | Add Product      |
+| PUT    | /product/:id | Update Product   |
+| DELETE | /product/:id | Delete Product   |
+| GET    | /search/:key | Search Product   |
 
 ---
 
-## 👨‍💻 Author
+# 📸 Screenshots
+
+### Product List
+![Product List](screenshots/product-list.png)
+
+### Add Product
+![Add Product](screenshots/add-product.png)
+
+### Login Page
+![Login](screenshots/login.png)
+
+---
+
+# 👨‍💻 Author
 
 **Sumit**
+
 MSc Computer Science Student
-Aspiring Full Stack Developer
+MERN Stack Learner 🚀
+
+---
+
+# ⭐ Support
+
+If you like this project please give it a ⭐ on GitHub.
