@@ -107,6 +107,8 @@ npm start
 
 # 📸 Screenshots
 
+# 📸 Screenshots
+
 ### Product List
 ![Product List](screenshots/product-list-new.png)
 
