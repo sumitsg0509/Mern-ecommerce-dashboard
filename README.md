@@ -125,7 +125,7 @@ npm start
 ![Product List](screenshots/product-list.png)
 
 ### Add Product
-![Add Product](screenshots/add-product-.png)
+![Add Product](screenshots/add-product.png)
 
 ### Login Page
 ![Login](screenshots/login.png)
