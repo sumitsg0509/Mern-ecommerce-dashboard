@@ -11,98 +11,74 @@ function UpdateProduct() {
   const params = useParams();
   const navigate = useNavigate();
 
+  // =========================
+  // GET SINGLE PRODUCT (AUTO FILL)
+  // =========================
   useEffect(() => {
     getProductDetails();
-  }, [params.id]);
+  }, []);
 
   const getProductDetails = async () => {
 
-    let result = await fetch(`http://localhost:5000/product/${params.id}`);
-
-    result = await result.json();
-
-    setName(result.name);
-    setPrice(result.price);
-    setBrand(result.brand);
-    setCategory(result.category);
-
-  };
-
-  const updateProduct = async () => {
+    const token = JSON.parse(localStorage.getItem("token"));
 
     let result = await fetch(`http://localhost:5000/product/${params.id}`, {
-
-      method: "PUT",
-
-      body: JSON.stringify({
-        name,
-        price,
-        brand,
-        category
-      }),
-
       headers: {
-        "Content-Type": "application/json"
+        authorization: `Bearer ${token}`
       }
-
     });
 
     result = await result.json();
 
-    if(result){
+    // 🔥 Auto fill form
+    setName(result.name);
+    setPrice(result.price);
+    setBrand(result.brand);
+    setCategory(result.category);
+  };
 
-      alert("Product Updated Successfully");
+  // =========================
+  // UPDATE PRODUCT
+  // =========================
+  const updateProduct = async () => {
 
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    let result = await fetch(`http://localhost:5000/product/${params.id}`, {
+      method: "PUT",
+      body: JSON.stringify({ name, price, brand, category }),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`
+      }
+    });
+
+    result = await result.json();
+
+    if (result) {
+      alert("Product Updated");
       navigate("/");
-
     }
-
   };
 
   return (
-    <div>
+    <div className="add-product">
 
       <h1>Update Product</h1>
 
-      <input
-        type="text"
-        placeholder="Enter Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Name" />
+      <br /><br />
 
-      <br/><br/>
+      <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Enter Price" />
+      <br /><br />
 
-      <input
-        type="text"
-        placeholder="Enter Price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
+      <input value={brand} onChange={(e) => setBrand(e.target.value)} placeholder="Enter Brand" />
+      <br /><br />
 
-      <br/><br/>
+      <input value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Enter Category" />
+      <br /><br />
 
-      <input
-        type="text"
-        placeholder="Enter Brand"
-        value={brand}
-        onChange={(e) => setBrand(e.target.value)}
-      />
-
-      <br/><br/>
-
-      <input
-        type="text"
-        placeholder="Enter Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      />
-
-      <br/><br/>
-
-      <button onClick={updateProduct}>
-        Update Product
-      </button>
+      <button onClick={updateProduct}>Update Product</button>
 
     </div>
   );

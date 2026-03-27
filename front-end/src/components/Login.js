@@ -1,150 +1,97 @@
-// ================================
-// REACT IMPORT
-// ================================
-
-import React, { useState, useEffect } from "react";
-
-// React Router navigation hook
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+function Login() {
 
-function Login(){
+  // state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // ================================
-  // STATE VARIABLES
-  // ================================
-
-  // email store करण्यासाठी
-  const [email,setEmail] = useState("");
-
-  // password store करण्यासाठी
-  const [password,setPassword] = useState("");
-
-  // page redirect साठी
   const navigate = useNavigate();
 
-
-  // ================================
-  // AUTO REDIRECT IF USER ALREADY LOGIN
-  // ================================
-
-  useEffect(()=>{
-
-    // localStorage मधून user check करतो
-    const auth = localStorage.getItem("user");
-
-    // जर user login असेल तर direct products page open
-    if(auth){
-      navigate("/");
-    }
-
-  },[]);
-
-
-  // ================================
+  // ==============================
   // LOGIN FUNCTION
-  // ================================
-
+  // ==============================
   const login = async () => {
 
-    // basic validation
-    if(!email || !password){
-
+    // validation
+    if (!email || !password) {
       alert("Please enter email and password");
       return;
-
     }
 
-    try{
-
-      // backend API call
-      let result = await fetch("http://localhost:5000/login",{
-
-        method:"POST",
-
-        body:JSON.stringify({email,password}),
-
-        headers:{
-          "Content-Type":"application/json"
-        }
-
-      });
-
-      result = await result.json();
-
-
-      // ================================
-      // LOGIN SUCCESS
-      // ================================
-
-      if(result.name){
-
-        // user data localStorage मध्ये save
-        localStorage.setItem("user",JSON.stringify(result));
-
-        // products page redirect
-        navigate("/");
-
-      }else{
-
-        alert("Invalid Email or Password");
-
+    // API call
+    let result = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json"
       }
+    });
 
-    }catch(error){
+    result = await result.json();
 
-      console.log("Login Error:",error);
-      alert("Server Error");
+    // success
+    if (result.auth) {
 
+      // token save
+      localStorage.setItem("token", JSON.stringify(result.auth));
+
+      // user save
+      localStorage.setItem("user", JSON.stringify(result.user));
+
+      // redirect
+      navigate("/");
+
+    } else {
+      alert("Invalid Email or Password");
     }
+  };
 
-  }
-
-
-  // ================================
-  // UI PART
-  // ================================
-
-  return(
-
+  return (
     <div className="login">
 
       <h1>Login</h1>
 
-      {/* EMAIL INPUT */}
-
+      {/* email input */}
       <input
-      type="email"
-      placeholder="Enter Email"
-      value={email}
-      onChange={(e)=>setEmail(e.target.value)}
+        type="text"
+        placeholder="Enter Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
-      <br/><br/>
+      <br /><br />
 
-
-      {/* PASSWORD INPUT */}
-
+      {/* password input */}
       <input
-      type="password"
-      placeholder="Enter Password"
-      value={password}
-      onChange={(e)=>setPassword(e.target.value)}
+        type="password"
+        placeholder="Enter Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
 
-      <br/><br/>
+      <br /><br />
 
-
-      {/* LOGIN BUTTON */}
-
+      {/* login button */}
       <button onClick={login}>Login</button>
 
+
+      {/* ==========================
+    SIGNUP LINK
+========================== */}
+<p>
+  Don't have an account?{" "}
+  <span
+    onClick={() => navigate("/signup")}
+    style={{ color: "#5fa8c5", cursor: "pointer", fontWeight: "bold" }}
+  >
+    Sign Up
+  </span>
+</p>
+
     </div>
-
-  )
-
+  );
 }
 
-
-// component export
 export default Login;

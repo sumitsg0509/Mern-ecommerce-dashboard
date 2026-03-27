@@ -1,11 +1,38 @@
+/* ===================================================
+   TAILWIND CSS SETUP (MANDATORY)
+   Tailwind ची base + components + utilities enable करतो
+=================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ===================================================
+   GLOBAL BODY STYLING
+   (Clean default UI)
+=================================================== */
+
 body {
   margin: 0;
+
+  /* System font stack (modern + clean UI) */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+
+  /* Better font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Light background for dashboard */
+  background-color: #f5f6fa;
 }
+
+
+/* ===================================================
+   CODE FONT (optional)
+=================================================== */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

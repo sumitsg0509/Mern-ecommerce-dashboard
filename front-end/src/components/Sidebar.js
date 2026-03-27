@@ -1,45 +1,74 @@
-// React import
+// ==============================
+// IMPORTS
+// ==============================
+
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-// routing साठी
-import { Link } from "react-router-dom";
+function Sidebar() {
 
-function Sidebar(){
+  return (
 
-  return(
+    // ==============================
+    // SIDEBAR CONTAINER
+    // ==============================
+    <div className="w-60 bg-gray-900 text-white min-h-screen p-5">
 
-    <div className="sidebar">
+      {/* Logo */}
+      <h2 className="text-2xl font-bold mb-6">E-Comm</h2>
 
-      <h2 className="logo">E-Comm</h2>
+      {/* ==============================
+         MENU ITEMS
+      ============================== */}
+      <ul className="space-y-4">
 
-      <ul>
-
-        {/* Products Page */}
+        {/* PRODUCTS */}
         <li>
-          <Link to="/">Products</Link>
+          <NavLink
+            to="/"
+            // active link styling
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-blue-500 p-2 rounded"
+                : "block p-2 hover:bg-gray-700 rounded"
+            }
+          >
+            📦 Products
+          </NavLink>
         </li>
 
-        {/* Add Product */}
+        {/* ADD PRODUCT */}
         <li>
-          <Link to="/add">Add Product</Link>
+          <NavLink
+            to="/add"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-blue-500 p-2 rounded"
+                : "block p-2 hover:bg-gray-700 rounded"
+            }
+          >
+            ➕ Add Product
+          </NavLink>
         </li>
 
-        {/* Profile */}
+        {/* PROFILE */}
         <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-
-        {/* Logout */}
-        <li>
-          <Link to="/logout">Logout</Link>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "block bg-blue-500 p-2 rounded"
+                : "block p-2 hover:bg-gray-700 rounded"
+            }
+          >
+            👤 Profile
+          </NavLink>
         </li>
 
       </ul>
 
     </div>
-
-  )
-
+  );
 }
 
 export default Sidebar;

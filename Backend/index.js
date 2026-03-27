@@ -1,282 +1,237 @@
-// =====================================
+// ================================
 // IMPORT REQUIRED PACKAGES
-// =====================================
-
+// ================================
 const express = require("express");
 const mongoose = require("mongoose");
 const Product = require("./models/Product");
 const User = require("./models/User");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
-
-// =====================================
+// ================================
 // MIDDLEWARE
-// =====================================
-
-// frontend ला backend access allow करतो
+// ================================
 app.use(cors());
-
-// request body मधला JSON data read करतो
 app.use(express.json());
 
+// ================================
+// JWT SECRET KEY
+// ================================
+const JWT_SECRET = "ecom-dashboard-secret-key";
 
-// =====================================
+// ================================
 // MONGODB CONNECTION
-// =====================================
-
-// MongoDB connection
-
+// ================================
 mongoose.connect("mongodb://127.0.0.1:27017/ecomm");
 
 mongoose.connection.on("connected", () => {
-  console.log("✅ MongoDB Connected");
+  console.log("MongoDB Connected");
 });
 
-mongoose.connection.on("error", (err) => {
-  console.log("❌ MongoDB Connection Error:", err);
-});
-
-// connection success
-mongoose.connection.on("connected", () => {
-  console.log("✅ MongoDB Connected");
-});
-
-// connection error
-mongoose.connection.on("error", (err) => {
-  console.log("❌ MongoDB Connection Error:", err);
-});
-
-
-// =====================================
-// TEST API
-// =====================================
-
-app.get("/", (req, res) => {
-  res.send("🚀 API running successfully");
-});
-
-
-// =====================================
-// USER REGISTER API
-// =====================================
-
-app.post("/register", async (req, res) => {
+// ================================
+// VERIFY TOKEN MIDDLEWARE
+// ================================
+const verifyToken = (req, res, next) => {
 
   try {
 
-    // frontend कडून आलेला data वापरून new user create करतो
-    let user = new User(req.body);
+    let token = req.headers['authorization'];
 
-    // database मध्ये save करतो
+    if (!token) {
+      return res.status(403).send({ result: "Token Required" });
+    }
+
+    // format: Bearer TOKEN
+    token = token.split(" ")[1];
+
+    jwt.verify(token, JWT_SECRET, (err, valid) => {
+
+      if (err) {
+        return res.status(401).send({ result: "Invalid Token" });
+      } else {
+        next();
+      }
+
+    });
+
+  } catch (error) {
+    return res.status(500).send({ result: "Token Error" });
+  }
+};
+
+// ================================
+// TEST API
+// ================================
+app.get("/", (req, res) => {
+  res.send("API running");
+});
+
+// ================================
+// USER REGISTER
+// ================================
+app.post("/register", async (req, res) => {
+
+  try {
+    let user = new User(req.body);
     let result = await user.save();
 
     result = result.toObject();
-
-    // security साठी password remove करतो
     delete result.password;
 
-    // response send
     res.send(result);
 
   } catch (error) {
-
-    console.log(error);
-    res.status(500).send({ error: "User Registration Failed" });
-
+    res.status(500).send({ result: "Error in Register" });
   }
 
 });
 
-
-// =====================================
-// USER LOGIN API
-// =====================================
-
+// ================================
+// USER LOGIN (JWT)
+// ================================
 app.post("/login", async (req, res) => {
 
   try {
 
     if (req.body.email && req.body.password) {
 
-      // database मध्ये user search
       let user = await User.findOne(req.body).select("-password");
 
       if (user) {
 
-        res.send(user);
+        jwt.sign(
+          { user },
+          JWT_SECRET,
+          { expiresIn: "2h" },
+          (err, token) => {
+
+            if (err) {
+              return res.send({ result: "Something went wrong" });
+            }
+
+            res.send({ user, auth: token });
+          }
+        );
 
       } else {
-
         res.send({ result: "No User Found" });
-
       }
 
     } else {
-
-      res.send({ result: "Email and Password Required" });
-
+      res.send({ result: "No User Found" });
     }
 
   } catch (error) {
-
-    console.log(error);
-    res.status(500).send({ error: "Login Failed" });
-
+    res.status(500).send({ result: "Login Error" });
   }
 
 });
 
+// ================================
+// PRODUCT APIs (PROTECTED)
+// ================================
 
-// =====================================
 // GET ALL PRODUCTS
-// =====================================
-
-app.get("/products", async (req, res) => {
+app.get("/products", verifyToken, async (req, res) => {
 
   try {
-
-    // database मधले सर्व products fetch
     let products = await Product.find();
-
     res.send(products);
-
   } catch (error) {
-
-    res.status(500).send({ error: "Unable to fetch products" });
-
+    res.status(500).send({ result: "Error fetching products" });
   }
 
 });
 
-
-// =====================================
 // ADD PRODUCT
-// =====================================
-
-app.post("/add-product", async (req, res) => {
+app.post("/add-product", verifyToken, async (req, res) => {
 
   try {
-
     let product = new Product(req.body);
-
     let result = await product.save();
-
     res.send(result);
-
   } catch (error) {
-
-    res.status(500).send({ error: "Product not added" });
-
+    res.status(500).send({ result: "Error adding product" });
   }
 
 });
 
-
-// =====================================
 // GET SINGLE PRODUCT
-// =====================================
-
-app.get("/product/:id", async (req, res) => {
+app.get("/product/:id", verifyToken, async (req, res) => {
 
   try {
-
-    let result = await Product.findById(req.params.id);
-
+    let result = await Product.findOne({ _id: req.params.id });
     res.send(result);
-
   } catch (error) {
-
-    res.status(500).send({ error: "Product not found" });
-
+    res.status(500).send({ result: "Error fetching product" });
   }
 
 });
 
-
-// =====================================
 // DELETE PRODUCT
-// =====================================
-
-app.delete("/product/:id", async (req, res) => {
+app.delete("/product/:id", verifyToken, async (req, res) => {
 
   try {
-
     let result = await Product.deleteOne({ _id: req.params.id });
-
     res.send(result);
-
   } catch (error) {
-
-    res.status(500).send({ error: "Product delete failed" });
-
+    res.status(500).send({ result: "Error deleting product" });
   }
 
 });
 
-
-// =====================================
 // UPDATE PRODUCT
-// =====================================
-
-app.put("/product/:id", async (req, res) => {
+app.put("/product/:id", verifyToken, async (req, res) => {
 
   try {
-
     let result = await Product.updateOne(
       { _id: req.params.id },
       { $set: req.body }
     );
-
     res.send(result);
-
   } catch (error) {
-
-    res.status(500).send({ error: "Product update failed" });
-
+    res.status(500).send({ result: "Error updating product" });
   }
 
 });
 
-
-// =====================================
 // SEARCH PRODUCT
-// =====================================
-
-app.get("/search/:key", async (req, res) => {
+app.get("/search/:key", verifyToken, async (req, res) => {
 
   try {
-
     let result = await Product.find({
-
-      $or: [
-
+      "$or": [
         { name: { $regex: req.params.key, $options: "i" } },
-
         { brand: { $regex: req.params.key, $options: "i" } },
-
         { category: { $regex: req.params.key, $options: "i" } }
-
       ]
-
     });
 
     res.send(result);
 
   } catch (error) {
-
-    res.status(500).send({ error: "Search failed" });
-
+    res.status(500).send({ result: "Search Error" });
   }
 
 });
 
-
-// =====================================
+// ================================
 // START SERVER
-// =====================================
-
+// ================================
 app.listen(5000, () => {
-  console.log("🔥 Server running on port 5000");
+  console.log("Server running on port 5000");
+});
+
+// =========================
+// GET USERS
+// =========================
+app.get("/users", async (req, resp) => {
+  try {
+    const users = await User.find();
+    resp.send(users);
+  } catch (err) {
+    resp.status(500).send({ error: "Failed to fetch users" });
+  }
 });

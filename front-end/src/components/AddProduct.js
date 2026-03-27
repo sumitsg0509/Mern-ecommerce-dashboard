@@ -1,38 +1,88 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
 
-  // form values store करण्यासाठी state
+  // ==============================
+  // STATE (Form Inputs)
+  // ==============================
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
 
-  // Add Product function
+  // redirect साठी
+  const navigate = useNavigate();
+
+  // ==============================
+  // ADD PRODUCT FUNCTION
+  // ==============================
   const addProduct = async () => {
 
-    // API call to backend
-    let result = await fetch("http://localhost:5000/add-product", {
-      method: "POST",
-      body: JSON.stringify({ name, price, brand, category }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    result = await result.json();
-
-    if(result){
-      alert("Product Added Successfully");
+    // ==============================
+    // VALIDATION
+    // ==============================
+    if (!name || !price || !brand || !category) {
+      alert("Please fill all fields");
+      return;
     }
 
+    try {
+
+      // ==============================
+      // TOKEN GET (JWT)
+      // ==============================
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      // ==============================
+      // API CALL
+      // ==============================
+      let result = await fetch("http://localhost:5000/add-product", {
+        method: "POST",
+        body: JSON.stringify({ name, price, brand, category }),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${token}`   // 🔥 IMPORTANT
+        }
+      });
+
+      result = await result.json();
+
+      console.log("Add Product Response:", result);
+
+      // ==============================
+      // SUCCESS
+      // ==============================
+      if (result) {
+        alert("Product Added Successfully");
+
+        // form reset
+        setName("");
+        setPrice("");
+        setBrand("");
+        setCategory("");
+
+        // redirect to product list
+        navigate("/");
+
+        // 🔥 IMPORTANT (refresh data)
+        window.location.reload();
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong");
+    }
   };
 
   return (
     <div className="add-product">
+
       <h1>Add Product</h1>
 
-      {/* Product Name */}
+      {/* ==========================
+         PRODUCT NAME
+      ========================== */}
       <input
         type="text"
         placeholder="Enter Product Name"
@@ -42,7 +92,9 @@ function AddProduct() {
 
       <br /><br />
 
-      {/* Product Price */}
+      {/* ==========================
+         PRODUCT PRICE
+      ========================== */}
       <input
         type="text"
         placeholder="Enter Price"
@@ -52,7 +104,9 @@ function AddProduct() {
 
       <br /><br />
 
-      {/* Product Brand */}
+      {/* ==========================
+         PRODUCT BRAND
+      ========================== */}
       <input
         type="text"
         placeholder="Enter Brand"
@@ -62,7 +116,9 @@ function AddProduct() {
 
       <br /><br />
 
-      {/* Product Category */}
+      {/* ==========================
+         PRODUCT CATEGORY
+      ========================== */}
       <input
         type="text"
         placeholder="Enter Category"
@@ -72,7 +128,9 @@ function AddProduct() {
 
       <br /><br />
 
-      {/* Add Button */}
+      {/* ==========================
+         ADD BUTTON
+      ========================== */}
       <button onClick={addProduct}>Add Product</button>
 
     </div>

@@ -1,73 +1,96 @@
-// React import
-import React from "react";
+// ==============================
+// IMPORTS
+// ==============================
 
-// React Router components
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Nav = () => {
+function Nav() {
 
-  // page redirect साठी hook
-  const navigate = useNavigate();
-
-  // localStorage मधून user data fetch
+  // ==============================
+  // CHECK USER LOGIN STATUS
+  // ==============================
   const auth = localStorage.getItem("user");
 
-  // JSON string → object convert
-  const user = auth ? JSON.parse(auth) : null;
+  // navigation hook
+  const navigate = useNavigate();
 
-  // logout function
+  // ==============================
+  // LOGOUT FUNCTION
+  // ==============================
   const logout = () => {
+    localStorage.clear();   // remove token + user
+    navigate("/signup");    // redirect to signup page
+  };
 
-    // localStorage clear करतो
-    localStorage.clear();
+  return (
 
-    // login page वर redirect
-    navigate("/login");
+    // ==============================
+    // NAVBAR UI
+    // ==============================
+    <div className="bg-blue-600 text-white px-6 py-3 flex justify-between items-center shadow">
 
-  }
+      {/* Logo / Title */}
+      <h1 className="text-xl font-bold">E-Comm Dashboard</h1>
 
-  return(
+      {/* ==============================
+         IF USER LOGGED IN → SHOW MENU
+      ============================== */}
+      {auth ? (
+        <ul className="flex gap-6 items-center">
 
-    <div>
+          {/* Products */}
+          <li>
+            <Link to="/" className="hover:text-gray-200">
+              Products
+            </Link>
+          </li>
 
-      <ul className="nav-ul">
+          {/* Add Product */}
+          <li>
+            <Link to="/add" className="hover:text-gray-200">
+              Add Product
+            </Link>
+          </li>
 
-        {
-          user ?
+          {/* Profile */}
+          <li>
+            <Link to="/profile" className="hover:text-gray-200">
+              Profile
+            </Link>
+          </li>
 
-          // जर user login असेल
-          <>
+          {/* Logout Button */}
+          <li>
+            <button
+              onClick={logout}
+              className="bg-red-500 px-3 py-1 rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </li>
 
-            <li><Link to="/">Products</Link></li>
+        </ul>
+      ) : (
 
-            <li><Link to="/add">Add Product</Link></li>
+        // ==============================
+        // IF USER NOT LOGGED IN
+        // ==============================
+        <ul className="flex gap-6">
 
-            {/* Navbar मध्ये user name show */}
-            <li>{user.name}</li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
 
-            {/* logout */}
-            <li onClick={logout}>
-              <Link to="/login">Logout</Link>
-            </li>
+          <li>
+            <Link to="/signup">Sign Up</Link>
+          </li>
 
-          </>
-
-          :
-
-          // login नसल्यास
-          <>
-            <li><Link to="/signup">Sign Up</Link></li>
-            <li><Link to="/login">Login</Link></li>
-          </>
-
-        }
-
-      </ul>
+        </ul>
+      )}
 
     </div>
-
-  )
-
+  );
 }
 
 export default Nav;

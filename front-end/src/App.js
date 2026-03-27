@@ -6,21 +6,16 @@ import './App.css';
 
 
 // ==============================
-// COMPONENT IMPORT
+// COMPONENT IMPORTS
 // ==============================
 
-// Navbar (Login / Signup pages साठी)
 import Nav from './components/Nav';
-
-// Footer
 import Footer from './components/Footer';
-
-// Sidebar (Dashboard साठी)
 import Sidebar from "./components/Sidebar";
 
 
 // ==============================
-// PAGES IMPORT
+// PAGES IMPORTS
 // ==============================
 
 import SignUp from './components/SignUp';
@@ -39,103 +34,104 @@ import Protected from './components/Protected';
 
 
 // ==============================
-// REACT ROUTER
+// REACT ROUTER IMPORTS
 // ==============================
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 
-function App() {
+// ==============================
+// MAIN APP COMPONENT
+// ==============================
+
+// ⚠️ IMPORTANT:
+// useLocation directly App मध्ये use करू शकत नाही
+// म्हणून आपण inner component बनवतो
+
+function AppWrapper() {
+
+  const location = useLocation();
+
+  // ==============================
+  // HIDE SIDEBAR ON LOGIN / SIGNUP
+  // ==============================
+  const hideSidebar =
+    location.pathname === "/login" ||
+    location.pathname === "/signup";
 
   return (
 
+    
     <div className="App">
 
+  
+
       {/* =========================
-         ROUTER START
+         NAVBAR (Top Menu)
       ========================= */}
+      <Nav />
 
-      <BrowserRouter>
-
-        {/* =========================
-           NAVBAR (Top Menu)
-        ========================= */}
-
-        <Nav />
-
+      {/* =========================
+         MAIN LAYOUT
+      ========================= */}
+      <div className="app">
 
         {/* =========================
-           MAIN LAYOUT
+           SIDEBAR (ONLY IF LOGGED IN PAGES)
         ========================= */}
+        {!hideSidebar && <Sidebar />}
 
-        <div className="app">
+        {/* =========================
+           CONTENT AREA
+        ========================= */}
+        <div className="content">
 
-          {/* Sidebar (Dashboard Menu) */}
-          <Sidebar />
-
-          {/* Content Area */}
-          <div className="content">
-
+          <Routes>
 
             {/* =========================
-               ROUTES
+               PROTECTED ROUTES
             ========================= */}
+            <Route element={<Protected />}>
 
-            <Routes>
+              <Route path="/" element={<ProductList />} />
+              <Route path="/add" element={<AddProduct />} />
+              <Route path="/update/:id" element={<UpdateProduct />} />
+              <Route path="/profile" element={<Profile />} />
 
+            </Route>
 
-              {/* =========================
-                 PROTECTED ROUTES
-                 Login नसल्यास open होणार नाही
-              ========================= */}
+            {/* =========================
+               PUBLIC ROUTES
+            ========================= */}
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
 
-              <Route element={<Protected />}>
-
-                {/* Product List */}
-                <Route path="/" element={<ProductList />} />
-
-                {/* Add Product */}
-                <Route path="/add" element={<AddProduct />} />
-
-                {/* Update Product */}
-                <Route path="/update/:id" element={<UpdateProduct />} />
-
-                {/* Profile Page */}
-                <Route path="/profile" element={<Profile />} />
-
-              </Route>
-
-
-              {/* =========================
-                 PUBLIC ROUTES
-              ========================= */}
-
-              {/* Register */}
-              <Route path="/signup" element={<SignUp />} />
-
-              {/* Login */}
-              <Route path="/login" element={<Login />} />
-
-
-            </Routes>
-
-          </div>
+          </Routes>
 
         </div>
 
+      </div>
 
-        {/* =========================
-           FOOTER
-        ========================= */}
-
-        <Footer />
-
-      </BrowserRouter>
+      {/* =========================
+         FOOTER
+      ========================= */}
+      <Footer />
 
     </div>
-
   );
+}
 
+
+// ==============================
+// ROOT APP (Router Wrapper)
+// ==============================
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppWrapper />
+    </BrowserRouter>
+  );
 }
 
 export default App;
