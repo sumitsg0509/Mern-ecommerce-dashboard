@@ -122,15 +122,12 @@ npm start
 # 📸 Screenshots
 
 ### Product List
-
 ![Product List](screenshots/product-list-new.png)
 
 ### Add Product
-
 ![Add Product](screenshots/add-product-new.png)
 
 ### Login Page
-
 ![Login](screenshots/login-new.png)
 
 ---
