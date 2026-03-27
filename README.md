@@ -1,21 +1,22 @@
-# 🛒 MERN E-commerce Dashboard
+# 🛒 MERN E-commerce Admin Dashboard
 
-A full stack **MERN Dashboard Application** to manage products with authentication and CRUD operations.
+A full-stack **MERN (MongoDB, Express.js, React, Node.js)** based Admin Dashboard to manage products with secure authentication and modern UI.
 
-This project allows users to register, login and manage products including adding, updating, deleting and searching products.
+This project allows users to register, login, and manage products efficiently including adding, updating, deleting, and searching products with a clean and responsive dashboard interface.
 
 ---
 
 # 🚀 Features
 
-✔ User Registration
-✔ User Login Authentication
+✔ User Registration & Login
+✔ JWT Authentication (Secure Access)
 ✔ Protected Routes
 ✔ Add Product
 ✔ Update Product
 ✔ Delete Product
-✔ Product Search
-✔ Dashboard UI
+✔ Product Search (with Debounce Optimization)
+✔ Dashboard Analytics (Total Products, Revenue, Users)
+✔ Responsive UI using Tailwind CSS
 ✔ Sidebar Navigation
 
 ---
@@ -26,7 +27,7 @@ This project allows users to register, login and manage products including addin
 
 * React.js
 * React Router
-* CSS
+* Tailwind CSS
 
 ### Backend
 
@@ -38,6 +39,10 @@ This project allows users to register, login and manage products including addin
 * MongoDB
 * Mongoose
 
+### Authentication
+
+* JSON Web Token (JWT)
+
 ---
 
 # 📂 Project Structure
@@ -45,20 +50,19 @@ This project allows users to register, login and manage products including addin
 Backend
 │
 ├── models
-│ ├── Product.js
-│ └── User.js
+│   ├── Product.js
+│   └── User.js
 │
 ├── index.js
-│
+
 front-end
 │
 ├── public
 ├── src
-│ ├── components
-│ ├── App.js
-│
+│   ├── components
+│   ├── App.js
+
 screenshots
-│
 README.md
 
 ---
@@ -67,27 +71,37 @@ README.md
 
 ### 1️⃣ Clone the repository
 
+```bash
 git clone https://github.com/sumitsg0509/Mern-ecommerce-dashboard.git
+```
 
 ### 2️⃣ Install backend dependencies
 
+```bash
 cd Backend
 npm install
+```
 
 ### 3️⃣ Install frontend dependencies
 
+```bash
 cd ../front-end
 npm install
+```
 
 ### 4️⃣ Start Backend Server
 
+```bash
 cd Backend
 nodemon index.js
+```
 
 ### 5️⃣ Start Frontend
 
+```bash
 cd front-end
 npm start
+```
 
 ---
 
@@ -107,28 +121,38 @@ npm start
 
 # 📸 Screenshots
 
-# 📸 Screenshots
-
 ### Product List
+
 ![Product List](screenshots/product-list-new.png)
 
 ### Add Product
+
 ![Add Product](screenshots/add-product-new.png)
 
 ### Login Page
+
 ![Login](screenshots/login-new.png)
+
+---
+
+# 🚀 Improvements
+
+* Implemented JWT-based authentication for secure access
+* Added search functionality with debounce optimization
+* Enhanced UI using Tailwind CSS
+* Built dashboard analytics section
+* Improved overall user experience
 
 ---
 
 # 👨‍💻 Author
 
 **Sumit**
-
 MSc Computer Science Student
-MERN Stack Learner 🚀
+MERN Stack Developer 🚀
 
 ---
 
 # ⭐ Support
 
-If you like this project please give it a ⭐ on GitHub.
+If you like this project, please give it a ⭐ on GitHub.
