@@ -1,2 +1,18 @@
-node_modules
+# dependencies
+node_modules/
+
+# environment
 .env
+.env.local
+.env.*.local
+
+# logs
+npm-debug.log*
+logs/
+*.log
+
+# testing
+coverage/
+
+# misc
+.DS_Store

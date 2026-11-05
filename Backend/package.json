@@ -1,18 +1,36 @@
 {
-  "name": "e-dashboard",
+  "name": "e-dashboard-backend",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
+  "description": "REST API for the MERN e-commerce dashboard",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
-  "author": "",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "author": "Sumit Gaikwad",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.3",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.0",
-    "nodemon": "^3.1.11"
+    "morgan": "^1.12.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.11",
+    "supertest": "^7.3.1"
   }
 }

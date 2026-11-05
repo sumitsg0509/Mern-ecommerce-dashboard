@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="E-CommDash">
+  <rect width="64" height="64" rx="16" fill="#4f46e5"/>
+  <path d="M21 25h22l-2.2 21.1A4 4 0 0 1 36.8 50H27.2a4 4 0 0 1-4-3.9L21 25Z" fill="#ffffff"/>
+  <path d="M27 25v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="28" cy="33" r="1.8" fill="#4f46e5"/>
+  <circle cx="36" cy="33" r="1.8" fill="#4f46e5"/>
+</svg>

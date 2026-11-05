@@ -1,13 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { isAuthenticated } from "../utils/auth";
 
 const Protected = () => {
-
-  // localStorage मधून user check करतो
-  const auth = localStorage.getItem("user");
-
-  // जर user logged in असेल तर children routes show कर
-  // नाही तर login page ला redirect
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  // Only show protected routes when both the token and user are present
+  return isAuthenticated() ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default Protected;
